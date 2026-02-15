@@ -72,6 +72,14 @@ log "OpenRAM source ready at $INSTALL_DIR"
 # ── 4. Python dependencies ────────────────────────────────────────────────────
 section "Installing Python dependencies"
 
+# Repair setuptools first to prevent 'cannot import name setup' errors
+# that break source-dist packages (e.g. rectpack) during metadata generation.
+pip3 install --force-reinstall setuptools --break-system-packages \
+    2>&1 | tee -a "$LOG_FILE" \
+|| pip3 install --force-reinstall setuptools \
+    2>&1 | tee -a "$LOG_FILE" \
+|| warn "setuptools reinstall failed — continuing anyway."
+
 REQ="$INSTALL_DIR/requirements.txt"
 if [[ -f "$REQ" ]]; then
     pip3 install -r "$REQ" --break-system-packages \
