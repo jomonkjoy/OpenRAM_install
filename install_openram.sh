@@ -55,19 +55,22 @@ sudo apt-get install -y \
 log "System packages installed."
 
 # ── 3. Clone OpenRAM ──────────────────────────────────────────────────────────
-section "Cloning OpenRAM (stable branch)"
+OPENRAM_TAG="v1.2.48"
+section "Cloning OpenRAM (tags/${OPENRAM_TAG})"
 
 if [[ -d "$INSTALL_DIR/.git" ]]; then
-    warn "OpenRAM already cloned — pulling latest."
-    git -C "$INSTALL_DIR" pull origin stable 2>&1 | tee -a "$LOG_FILE"
+    warn "OpenRAM already cloned — fetching and checking out $OPENRAM_TAG."
+    git -C "$INSTALL_DIR" fetch --tags 2>&1 | tee -a "$LOG_FILE"
+    git -C "$INSTALL_DIR" checkout "tags/$OPENRAM_TAG" 2>&1 | tee -a "$LOG_FILE" \
+        || error "Failed to checkout tags/$OPENRAM_TAG. See $LOG_FILE"
 else
-    git clone --branch stable \
+    git clone --branch "$OPENRAM_TAG" \
         https://github.com/VLSIDA/OpenRAM.git \
         "$INSTALL_DIR" \
         2>&1 | tee -a "$LOG_FILE" \
         || error "git clone failed. Check your connection."
 fi
-log "OpenRAM source ready at $INSTALL_DIR"
+log "OpenRAM source ready at $INSTALL_DIR (tags/$OPENRAM_TAG)"
 
 # ── 4. Python dependencies ────────────────────────────────────────────────────
 section "Installing Python dependencies"

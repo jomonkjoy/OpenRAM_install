@@ -28,4 +28,4 @@ fi
 
 echo "[▶] Running OpenRAM with: $CONFIG"
 echo ""
-python3 "$OPENRAM_HOME/openram.py" "$CONFIG"
+python3 "$OPENRAM_HOME/../sram_compiler.py" "$CONFIG"
