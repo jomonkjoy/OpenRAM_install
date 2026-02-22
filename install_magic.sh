@@ -27,7 +27,7 @@ CLONE_URL="https://github.com/RTimothyEdwards/magic.git"
 
 # Stable tag known to work well as a baseline on older compilers.
 # On GCC 14+ this tag is combined with source patches (see apply_patches).
-STABLE_TAG="magic-8.3.470"
+STABLE_TAG="8.3.470"
 
 # ---------------------------------------------------------------------------
 # Colour output
